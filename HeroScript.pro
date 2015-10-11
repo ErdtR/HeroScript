@@ -13,8 +13,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    lexicalanalyzer.cpp \
+    token.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    lexicalanalyzer.h \
+    token.h
 
 FORMS    += mainwindow.ui
