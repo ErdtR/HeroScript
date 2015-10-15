@@ -14,6 +14,7 @@ private:
 
     QList<Token> parseCommentsAndString(QList<Token> tokens);
     QList<Token> deleteWhiteSpaces(QList<Token> tokens);
+    QList<Token> parseToken(QList<Token> tokens, QString str, TokenType type);
 };
 
 #endif // LEXICALANALYZER_H

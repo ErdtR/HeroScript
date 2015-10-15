@@ -13,6 +13,12 @@ QList<Token> LexicalAnalyzer::parse(QString program)
     result.append(Token(program, unparsed));
     result = parseCommentsAndString(result);
     result = deleteWhiteSpaces(result);
+    result = parseToken(result, ";", semicolon);
+    result = parseToken(result, "{", leftCurlyBrace);
+    result = parseToken(result, "}", rightCurlyBrace);
+    result = parseToken(result, "(", leftParenthesis);
+    result = parseToken(result, ")", rightParenthesis);
+    result = parseToken(result, ".", dot);
 
     return result;
 }
@@ -111,6 +117,57 @@ QList<Token> LexicalAnalyzer::deleteWhiteSpaces(QList<Token> tokens)
         {
             result.append(Token(str, unparsed));
         }
+    }
+
+    return result;
+}
+
+QList<Token> LexicalAnalyzer::parseToken(QList<Token> tokens, QString str, TokenType type)
+{
+    QList<Token> result;
+
+    foreach (Token token, tokens) {
+        if(token.getType() != unparsed)
+        {
+            result.append(token);
+            continue;
+        }
+
+        QString data = token.getData();
+        int semicolonIndex = data.indexOf(str);
+
+        if(semicolonIndex == -1)
+        {
+            result.append(token);
+        }
+        else if(data.length() == 1)
+        {
+            result.append(Token(str, type));
+        }
+        else if(semicolonIndex == 0)
+        {
+            result.append(Token(str, type));
+            QString endString = data.mid(1, data.length()-1);
+            result.append(Token(endString, unparsed));
+            result = parseToken(result, str, type);
+        }
+        else if(semicolonIndex == data.length()-1)
+        {
+            QString startString = data.mid(0, data.length()-1);
+            result.append(Token(startString, unparsed));
+            result.append(Token(str, type));
+            result = parseToken(result, str, type);
+        }
+        else
+        {
+            QString startString = data.mid(0, semicolonIndex);
+            QString endString = data.mid(semicolonIndex+1, data.length()-semicolonIndex-1);
+            result.append(Token(startString, unparsed));
+            result.append(Token(str, type));
+            result.append(Token(endString, unparsed));
+            result = parseToken(result, str, type);
+        }
+
     }
 
     return result;

@@ -5,6 +5,13 @@
 enum TokenType{
     comment,
     string,
+    number,
+    semicolon,
+    leftParenthesis,
+    rightParenthesis,
+    leftCurlyBrace,
+    rightCurlyBrace,
+    dot,
     unparsed
 };
 
