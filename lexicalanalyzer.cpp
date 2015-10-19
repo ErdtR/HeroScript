@@ -19,6 +19,27 @@ QList<Token> LexicalAnalyzer::parse(QString program)
     result = parseToken(result, "(", leftParenthesis);
     result = parseToken(result, ")", rightParenthesis);
     result = parseToken(result, ".", dot);
+    result = parseToken(result, "==", logicEqual);
+    result = parseToken(result, "<", logicLess);
+    result = parseToken(result, ">", logicMore);
+    result = parseToken(result, "!=", logicNotEqual);
+    result = parseToken(result, "=", assigment);
+    result = parseToken(result, "+", plus);
+    result = parseToken(result, "-", minus);
+    result = parseToken(result, "/", division);
+    result = parseToken(result, "*", multiplication);
+    result = parseKeyWord(result, "var", var);
+    result = parseKeyWord(result, "if", ifToken);
+    result = parseKeyWord(result, "else", elseToken);
+    result = parseKeyWord(result, "while", whileToken);
+    result = parseKeyWord(result, "Hero", heroObject);
+    result = parseKeyWord(result, "go", goMethod);
+    result = parseKeyWord(result, "turnLeft", turnLeftMethod);
+    result = parseKeyWord(result, "turnRight", turnRightMethod);
+    result = parseKeyWord(result, "collectGem", collectGemMethod);
+    result = parseKeyWord(result, "say", sayMethod);
+    result = parseKeyWord(result, "stoped", stopedEvent);
+    result = parseKeyWord(result, "gemCollectedEvent", gemCollectedEvent);
 
     return result;
 }
@@ -75,7 +96,7 @@ QList<Token> LexicalAnalyzer::parseCommentsAndString(QList<Token> tokens)
             int stringEnd = data.indexOf('"', stringStart+1);
             if(stringStart>0)
             {
-                QString beforeString = data.mid(0, stringStart-1);
+                QString beforeString = data.mid(0, stringStart);
                 result.append(Token(beforeString, unparsed));
             }
 
@@ -134,34 +155,34 @@ QList<Token> LexicalAnalyzer::parseToken(QList<Token> tokens, QString str, Token
         }
 
         QString data = token.getData();
-        int semicolonIndex = data.indexOf(str);
+        int startIndex = data.indexOf(str);
 
-        if(semicolonIndex == -1)
+        if(startIndex == -1)
         {
             result.append(token);
         }
-        else if(data.length() == 1)
+        else if(data.length() == str.length())
         {
             result.append(Token(str, type));
         }
-        else if(semicolonIndex == 0)
+        else if(startIndex == 0)
         {
             result.append(Token(str, type));
-            QString endString = data.mid(1, data.length()-1);
+            QString endString = data.mid(str.length(), data.length()-str.length());
             result.append(Token(endString, unparsed));
             result = parseToken(result, str, type);
         }
-        else if(semicolonIndex == data.length()-1)
+        else if(startIndex == data.length()-str.length())
         {
-            QString startString = data.mid(0, data.length()-1);
+            QString startString = data.mid(0, data.length()-str.length());
             result.append(Token(startString, unparsed));
             result.append(Token(str, type));
             result = parseToken(result, str, type);
         }
         else
         {
-            QString startString = data.mid(0, semicolonIndex);
-            QString endString = data.mid(semicolonIndex+1, data.length()-semicolonIndex-1);
+            QString startString = data.mid(0, startIndex);
+            QString endString = data.mid(startIndex+str.length(), data.length()-startIndex-str.length());
             result.append(Token(startString, unparsed));
             result.append(Token(str, type));
             result.append(Token(endString, unparsed));
@@ -173,3 +194,29 @@ QList<Token> LexicalAnalyzer::parseToken(QList<Token> tokens, QString str, Token
     return result;
 }
 
+QList<Token> LexicalAnalyzer::parseKeyWord(QList<Token> tokens, QString str, TokenType type)
+{
+    QList<Token> result;
+
+    foreach (Token token, tokens) {
+        if(token.getType() != unparsed)
+        {
+            result.append(token);
+            continue;
+        }
+
+        QString data = token.getData();
+        int startIndex = data.indexOf(str);
+
+        if(startIndex==0 && (data.length()==str.length()))
+        {
+            result.append(Token(str, type));
+        }
+        else
+        {
+            result.append(token);
+        }
+    }
+
+    return result;
+}
