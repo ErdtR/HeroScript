@@ -40,6 +40,7 @@ QList<Token> LexicalAnalyzer::parse(QString program)
     result = parseKeyWord(result, "say", sayMethod);
     result = parseKeyWord(result, "stoped", stopedEvent);
     result = parseKeyWord(result, "gemCollectedEvent", gemCollectedEvent);
+    result = parseNumber(result);
 
     return result;
 }
@@ -211,6 +212,33 @@ QList<Token> LexicalAnalyzer::parseKeyWord(QList<Token> tokens, QString str, Tok
         if(startIndex==0 && (data.length()==str.length()))
         {
             result.append(Token(str, type));
+        }
+        else
+        {
+            result.append(token);
+        }
+    }
+
+    return result;
+}
+
+QList<Token> LexicalAnalyzer::parseNumber(QList<Token> tokens)
+{
+    QList<Token> result;
+
+    foreach (Token token, tokens) {
+        if(token.getType() != unparsed)
+        {
+            result.append(token);
+            continue;
+        }
+
+        QString data = token.getData();
+        int startIndex = data.indexOf(QRegularExpression("\\d+"));
+
+        if(startIndex==0)
+        {
+            result.append(Token(data, number));
         }
         else
         {

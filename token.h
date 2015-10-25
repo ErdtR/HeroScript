@@ -45,6 +45,7 @@ public:
 
     QString getData();
     TokenType getType();
+    QString getTypeString();
 
 private:
     QString _data;

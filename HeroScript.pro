@@ -15,10 +15,20 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     lexicalanalyzer.cpp \
-    token.cpp
+    token.cpp \
+    parser.cpp \
+    command.cpp \
+    simplecommand.cpp \
+    conditioncommand.cpp \
+    expression.cpp
 
 HEADERS  += mainwindow.h \
     lexicalanalyzer.h \
-    token.h
+    token.h \
+    parser.h \
+    command.h \
+    simplecommand.h \
+    conditioncommand.h \
+    expression.h
 
 FORMS    += mainwindow.ui

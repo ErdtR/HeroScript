@@ -22,7 +22,15 @@ void MainWindow::on_pushButton_clicked()
     LexicalAnalyzer analyzer;
     QList<Token> result = analyzer.parse(program);
     qDebug() << result.length();
+    int length = result.length();
+    ui->tableWidget->setRowCount(length);
+    int i = 0;
     foreach (Token token, result) {
+        QTableWidgetItem *tokenString = new QTableWidgetItem(token.getData());
+        QTableWidgetItem *tokenTypeString = new QTableWidgetItem(token.getTypeString());
         qDebug() << token.getData()<<" --- "<<token.getType();
+        ui->tableWidget->setItem(i, 0, tokenString);
+        ui->tableWidget->setItem(i, 1, tokenTypeString);
+        i++;
     }
 }
