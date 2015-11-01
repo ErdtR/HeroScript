@@ -7,10 +7,25 @@ class ConditionCommand : public Command
 {
 public:
     ConditionCommand();
+private:
+    Command* _trueCommand;
+    Command* _falseCommand;
+};
 
-signals:
+class IfCommand : public ConditionCommand
+{
+public:
+    IfCommand();
+    Command* getNextCommand();
+    void execute();
+};
 
-public slots:
+class WhileCommand : public ConditionCommand
+{
+public:
+    WhileCommand();
+    Command* getNextCommand();
+    void execute();
 };
 
 #endif // CONDITIONCOMMAND_H

@@ -55,6 +55,7 @@ QString Token::getTypeString()
     case sayMethod: return "sayMethod";
     case stopedEvent: return "stopedEvent";
     case gemCollectedEvent: return "gemCollectedEvent";
+    case variable: return "variable";
     case unparsed: return "unparsed";
     }
 }

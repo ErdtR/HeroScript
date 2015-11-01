@@ -20,7 +20,9 @@ SOURCES += main.cpp\
     command.cpp \
     simplecommand.cpp \
     conditioncommand.cpp \
-    expression.cpp
+    expression.cpp \
+    context.cpp \
+    interpreter.cpp
 
 HEADERS  += mainwindow.h \
     lexicalanalyzer.h \
@@ -29,6 +31,8 @@ HEADERS  += mainwindow.h \
     command.h \
     simplecommand.h \
     conditioncommand.h \
-    expression.h
+    expression.h \
+    context.h \
+    interpreter.h
 
 FORMS    += mainwindow.ui

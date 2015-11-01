@@ -34,6 +34,7 @@ enum TokenType{
     sayMethod,
     stopedEvent,
     gemCollectedEvent,
+    variable,
     unparsed
 };
 
