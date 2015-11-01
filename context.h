@@ -10,6 +10,7 @@ public:
     Context();
     void addVariable(QString name, QString val);
     QString getVariable(QString name);
+    void setVariable(QString name, QString val);
 
 signals:
 

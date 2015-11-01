@@ -23,3 +23,12 @@ QString Context::getVariable(QString name)
     }
 }
 
+void Context::setVariable(QString name, QString val)
+{
+    if(_map.contains(name))
+    {
+        _map.insert(name, val);
+    }
+    qDebug() << _map.count();
+}
+

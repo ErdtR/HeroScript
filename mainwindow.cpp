@@ -39,7 +39,7 @@ void MainWindow::on_pushButton_clicked()
     }
     Context context;
     Parser parser = Parser(&context);
-    Command *command = parser.parse(result, 0);
+    Command *command = parser.parse(result, 0, result.length());
     Interpreter interpreter;
     interpreter.interpret(command);
 }

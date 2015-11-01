@@ -22,19 +22,51 @@ public:
     void execute();
 };
 
+class AssigmentCommand : public SimpleCommand
+{
+private:
+    QString _variable;
+    Expression *_exp;
+public:
+    AssigmentCommand(Context *context, QString variable, Expression *exp);
+    void setNextCommand(Command *command);
+    Command *getNextCommand();
+    void execute();
+};
+
 class GoCommand : public SimpleCommand
 {
 public:
     GoCommand();
-    Command* getNextCommand();
+    Command *getNextCommand();
+    void setNextCommand(Command *command);
     void execute();
 };
 
 class SayCommand : public SimpleCommand
 {
+private:
+    Expression *_exp;
 public:
-    SayCommand();
-    Command* getNextCommand();
+    SayCommand(Expression *exp);
+    Command *getNextCommand();
+    void setNextCommand(Command *command);
+    void execute();
+};
+
+class TurnLeftCommand : public SimpleCommand
+{
+public:
+    Command *getNextCommand();
+    void setNextCommand(Command *command);
+    void execute();
+};
+
+class TurnRightCommand : public SimpleCommand
+{
+public:
+    Command *getNextCommand();
+    void setNextCommand(Command *command);
     void execute();
 };
 
